@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import BarbeLogo from "../../assets/barber.svg";
 import {
   Container,
@@ -14,10 +13,21 @@ import InputArea from "../../components/SignInput";
 import SignInput from "../../components/SignInput";
 import EmailIcon from "../../assets/email.svg";
 import LockIcon from "../../assets/lock.svg";
+import { useNavigation } from "@react-navigation/native";
 
 export default () => {
+  const navigation = useNavigation();
   const [emailField, setEmailField] = useState("");
   const [passwordField, setPasswordlField] = useState("");
+
+  const handleSingClick = () => {};
+
+  const handleMessageButtonClick = () => {
+    //mandar o usuario pra outra tela sem a possibilidade dele voltar
+    navigation.reset({
+      routes: [{ name: "SignUp" }],
+    });
+  };
 
   return (
     <Container>
@@ -38,11 +48,12 @@ export default () => {
           password={true}
         />
 
-        <CustomButton>
+        <CustomButton onPress={handleSingClick}>
           <CustomButtonText>LOGIN</CustomButtonText>
         </CustomButton>
       </InputArea>
-      <SingMessageButton>
+
+      <SingMessageButton onPress={handleMessageButtonClick}>
         <SingMessageButtonText>
           Ainda não possui uma conta?
         </SingMessageButtonText>
