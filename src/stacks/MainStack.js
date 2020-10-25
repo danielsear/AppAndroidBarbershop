@@ -1,8 +1,8 @@
-import React from "react";
-import { createNavigatorFactory } from "@react-navigation/native";
-import Preload from "../screens/Preload";
-import SigIn from "../screens/SigIn";
-import SigUp from "../screens/SigUp";
+import React from 'react';
+import {createNavigatorFactory} from '@react-navigation/native';
+import Preload from '../screens/Preload';
+import SigIn from '../screens/SigIn';
+import SigUp from '../screens/SigUp';
 const Stack = createNavigatorFactory();
 
 export default () => (
