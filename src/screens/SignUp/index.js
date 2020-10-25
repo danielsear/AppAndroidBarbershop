@@ -14,8 +14,8 @@ import SignInput from "../../components/SignInput";
 import EmailIcon from "../../assets/email.svg";
 import LockIcon from "../../assets/lock.svg";
 import PersonIcon from "../../assets/person.svg";
-
 import { useNavigation } from "@react-navigation/native";
+import Api from "../../Api";
 
 export default () => {
   const navigation = useNavigation();
@@ -24,7 +24,18 @@ export default () => {
   const [emailField, setEmailField] = useState("");
   const [passwordField, setPasswordlField] = useState("");
 
-  const handleSingClick = () => {};
+  const handleSingClick = async () => {
+    if (nameField != "" && emailField != "" && passwordField != "") {
+      let res = await Api.signUp(nameField, emailField, passwordField);
+      if (res.token) {
+        alert("entrou");
+      } else {
+        alert("Error:" + res.error);
+      }
+    } else {
+      alert("Preencha os campos!");
+    }
+  };
 
   const handleMessageButtonClick = () => {
     //mandar o usuario pra outra tela sem a possibilidade dele voltar
