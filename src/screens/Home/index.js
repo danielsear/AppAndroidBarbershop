@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchIcon from "../../assets/search.svg";
 import MyLocationIcon from "../../assets/my_location.svg";
 import { useNavigation } from "@react-navigation/native";
 import { request, PERMISSIONS } from "react-native-permissions";
 import Geolocation from "@react-native-community/geolocation";
 import { Platform } from "react-native"; //precisamso saber se o app esta rodando em android ou ios
+import Api from "../../Api";
 
 import {
   Container,
@@ -26,7 +27,23 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
 
-  const getBarbers = () => {};
+  //função de pegar a lista dos barbeiros
+  const getBarbers = async () => {
+    setLoading(true);
+    setList([]);
+
+    let res = await Api.getBarbers();
+    if (res.error == "") {
+      if (res.loc) {
+        setLocationText(res.loc);
+      }
+      setList(res.data);
+    } else {
+      alert("error:" + res.error);
+    }
+    setLoading(false);
+  };
+
   const handleLocationFinder = async () => {
     setCoords(null);
     let result = await request(
@@ -47,6 +64,10 @@ export default () => {
       });
     }
   };
+
+  useEffect(() => {
+    getBarbers();
+  });
 
   return (
     <Container>

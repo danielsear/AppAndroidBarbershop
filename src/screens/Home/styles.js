@@ -43,7 +43,7 @@ export default LocationFinder = styled.TouchableOpacity`
   width: 24px;
   height: 24px;
 `;
-,
+
 export default LoadingIcon = styled.ActivityIndicator`
- margin-top: 50px;
+  margin-top: 50px;
 `;
