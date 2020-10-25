@@ -6,6 +6,7 @@ import { request, PERMISSIONS } from "react-native-permissions";
 import Geolocation from "@react-native-community/geolocation";
 import { Platform } from "react-native"; //precisamso saber se o app esta rodando em android ou ios
 import Api from "../../Api";
+import BarberItem from "../../components/BarberItem";
 
 import {
   Container,
@@ -17,6 +18,7 @@ import {
   LocationInput,
   LocationFinder,
   LoadingIcon,
+  ListArea,
 } from "./styles";
 
 export default () => {
@@ -93,6 +95,12 @@ export default () => {
           </LocationFinder>
         </LocationArea>
         {loading && <LoadingIcon size="large" fill="#ffffff" />}
+
+        <ListArea>
+          {list.map((item, k) => {
+            <BarberItem key={k} data={item} />;
+          })}
+        </ListArea>
       </Scroller>
     </Container>
   );
