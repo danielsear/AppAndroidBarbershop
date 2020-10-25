@@ -17,24 +17,53 @@ const TabItem = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export default () => {
+export default (state, navigation) => {
+  const goTo = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
   return (
     <TabArea>
-      <TabItem>
-        <HomeIcon width="24" height="24" fill="#ffffff" />
+      <TabItem onPress={() => goTo("Home")}>
+        <HomeIcon
+          style={{ opacity: state.index === 0 ? 1 : 0.5 }}
+          width="24"
+          height="24"
+          fill="#ffffff"
+        />
       </TabItem>
-      <TabItem>
+      <TabItem
+        style={{ opacity: state.index === 0 ? 1 : 0.5 }}
+        onPress={() => goTo("Search")}
+      >
         <SearchIcon width="24" height="24" fill="#ffffff" />
       </TabItem>
-      <TabItem>
+      <TabItem
+        style={{ opacity: state.index === 1 ? 1 : 0.5 }}
+        onPress={() => goTo("Appointments")}
+      >
         <TodayIcon width="24" height="24" fill="#ffffff" />
       </TabItem>
-      <TabItem>
+      <TabItem
+        style={{ opacity: state.index === 2 ? 1 : 0.5 }}
+        onPress={() => goTo("Favorites")}
+      >
         <FavoriteIcon width="24" height="24" fill="#ffffff" />
       </TabItem>
-      <TabItem>
-        <AccountIcon width="24" height="24" fill="#ffffff" />
+      <TabItem
+        style={{ opacity: state.index === 3 ? 1 : 0.5 }}
+        onPress={() => goTo("Profile")}
+      >
+        <AccountIcon
+          style={{ opacity: state.index === 4 ? 1 : 0.5 }}
+          width="24"
+          height="24"
+          fill="#ffffff"
+        />
       </TabItem>
     </TabArea>
   );
 };
+
+// a propriedade state mostra qual tela estara ativa
+//style={{ opacity: state.index === 4 ? 1 : 0.5 }}se o estado da tela4 for igual 0 o opacity=1 caso contrario opacity=0.5
