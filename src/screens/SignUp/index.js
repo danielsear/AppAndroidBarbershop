@@ -33,9 +33,9 @@ export default () => {
       if (res.token) {
         //fez o cadastro
 
-        //salvar o usuario no storage
+        //salvar o usuario no AsyncStorage
         await AsyncStorage.setItem("token", res.token);
-        //salvar usuario no context
+        //salvar o avatar do usuario no context
         userDispatch({
           type: "setAvatar",
           payload: {
