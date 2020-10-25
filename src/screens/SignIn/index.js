@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import BarbeLogo from "../../assets/barber.svg";
 import {
   Container,
@@ -15,8 +15,11 @@ import EmailIcon from "../../assets/email.svg";
 import LockIcon from "../../assets/lock.svg";
 import { useNavigation } from "@react-navigation/native";
 import Api from "../../Api";
+import AsyncStorage from "@react-native-community/async-storage";
+import UseContext from "../../contexts/UserContex";
 
 export default () => {
+  const { dispatch: userDispatch } = useContext(UseContext);
   const navigation = useNavigation();
   const [emailField, setEmailField] = useState("");
   const [passwordField, setPasswordlField] = useState("");
@@ -25,7 +28,20 @@ export default () => {
     if (emailField != "" && passwordField != "") {
       let json = await Api.signIn(emailField, passwordField);
       if (json.token) {
-        alert("entrou");
+        //fez o login
+        //salvar o usuario no storage
+        await AsyncStorage.setItem("token", json.token);
+        //salvar usuario no context
+        userDispatch({
+          type: "setAvatar",
+          payload: {
+            avatar: json.data.avatar,
+          },
+        });
+        //manda o usuario sem retorno para o MainTab
+        navigation.reset({
+          routes: [{ name: "MainTab" }],
+        });
       } else {
         alert("Email e/ou senha inválidos!");
       }

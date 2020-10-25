@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import BarbeLogo from "../../assets/barber.svg";
 import {
   Container,
@@ -16,8 +16,11 @@ import LockIcon from "../../assets/lock.svg";
 import PersonIcon from "../../assets/person.svg";
 import { useNavigation } from "@react-navigation/native";
 import Api from "../../Api";
+import AsyncStorage from "@react-native-community/async-storage";
+import UseContext from "../../contexts/UserContex";
 
 export default () => {
+  const { dispatch: userDispatch } = useContext(UseContext);
   const navigation = useNavigation();
 
   const [nameField, setNamelField] = useState("");
@@ -28,7 +31,21 @@ export default () => {
     if (nameField != "" && emailField != "" && passwordField != "") {
       let res = await Api.signUp(nameField, emailField, passwordField);
       if (res.token) {
-        alert("entrou");
+        //fez o cadastro
+
+        //salvar o usuario no storage
+        await AsyncStorage.setItem("token", res.token);
+        //salvar usuario no context
+        userDispatch({
+          type: "setAvatar",
+          payload: {
+            avatar: res.data.avatar,
+          },
+        });
+        //manda o usuario sem retorno para o MainTab
+        navigation.reset({
+          routes: [{ name: "MainTab" }],
+        });
       } else {
         alert("Error:" + res.error);
       }
