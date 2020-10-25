@@ -16,6 +16,16 @@ const TabItem = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 `;
+const TabItemCenter = styled.TouchableOpacity`
+  width: 70px;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 35px;
+  border: 3px solid #4eadbe;
+  margin-top: -20px;
+`;
 
 export default (state, navigation) => {
   const goTo = (screenName) => {
@@ -38,12 +48,9 @@ export default (state, navigation) => {
       >
         <SearchIcon width="24" height="24" fill="#ffffff" />
       </TabItem>
-      <TabItem
-        style={{ opacity: state.index === 1 ? 1 : 0.5 }}
-        onPress={() => goTo("Appointments")}
-      >
-        <TodayIcon width="24" height="24" fill="#ffffff" />
-      </TabItem>
+      <TabItemCenter onPress={() => goTo("Appointments")}>
+        <TodayIcon width="32" height="32" fill="#4eadbe" />
+      </TabItemCenter>
       <TabItem
         style={{ opacity: state.index === 2 ? 1 : 0.5 }}
         onPress={() => goTo("Favorites")}
