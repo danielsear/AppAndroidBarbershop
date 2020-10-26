@@ -4,7 +4,7 @@ import MyLocationIcon from "../../assets/my_location.svg";
 import { useNavigation } from "@react-navigation/native";
 import { request, PERMISSIONS } from "react-native-permissions";
 import Geolocation from "@react-native-community/geolocation";
-import { Platform } from "react-native"; //precisamso saber se o app esta rodando em android ou ios
+import { Platform, RefreshControl } from "react-native"; //precisamso saber se o app esta rodando em android ou ios
 import Api from "../../Api";
 import BarberItem from "../../components/BarberItem";
 
@@ -28,6 +28,7 @@ export default () => {
   const [coords, setCoords] = useState(null);
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   //função de pegar a lista dos barbeiros
   const getBarbers = async () => {
@@ -71,9 +72,18 @@ export default () => {
     getBarbers();
   });
 
+  const onRefresh = () => {
+    setRefreshing(false);
+    getBarbers();
+  };
+
   return (
     <Container>
-      <Scroller>
+      <Scroller
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <HeaderArea>
           <HeaderTitle numberOfLines={2}>
             Encontre o seu barbeiro favorito
