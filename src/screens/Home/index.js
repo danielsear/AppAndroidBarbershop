@@ -35,7 +35,15 @@ export default () => {
     setLoading(true);
     setList([]);
 
-    let res = await Api.getBarbers();
+    let lat = null;
+    let long = null;
+    if (coords) {
+      lat = coords.latitude;
+      long = coords.longitude;
+    }
+
+    let res = await Api.getBarbers(lat, long, locationText);
+    //o locationtext vai pegar o nome digitado e procurar no google as coordenadas
     if (res.error == "") {
       if (res.loc) {
         setLocationText(res.loc);
@@ -77,6 +85,11 @@ export default () => {
     getBarbers();
   };
 
+  const handleLocationSearch = () => {
+    setCoords({});
+    getBarbers();
+  };
+
   return (
     <Container>
       <Scroller
@@ -98,7 +111,8 @@ export default () => {
             placeholder="Onde você está?"
             placeholderTextColor="#ffffff"
             value={locationText}
-            onChengeText={(text) => setLocationText(text)}
+            onChangeText={(text) => setLocationText(text)}
+            onEndEditing={handleLocationSearch}
           />
           <LocationFinder onPress={handleLocationFinder}>
             <MyLocationIcon width="24" height="24" fill="#ffffff" />
